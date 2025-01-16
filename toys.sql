@@ -5,14 +5,14 @@ CREATE TABLE toys1
     weight INT NULL);
 
 INSERT INTO toys1 (toy_name, weight)
-VALUES ("Велосипед", 10);
+VALUES ('Велосипед', 10);
 
 INSERT INTO toys1 (toy_name, weight)
-VALUES ("Самокат", 5);
+VALUES ('Самокат', 5);
 
 UPDATE toys1
 SET weight = 15
-WHERE toy_name = "Велосипед";
+WHERE toy_name = 'Велосипед';
 
 TRUNCATE toys1;
 
