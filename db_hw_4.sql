@@ -19,26 +19,17 @@ SELECT *
 FROM customers
 WHERE city = 'Lakeside';
 
-SELECT *, COUNT(*) AS best_seller
+SELECT good_id, COUNT(*) AS best_seller
 FROM orders
 GROUP BY good_id
 ORDER BY best_seller DESC
 LIMIT 1;
 
-/* 7. Вывести список заказов с максимальной скидкой.
-   У нас у всех товаров уже задана скидка 10%.
-   Разницу можно посчитать только в валюте. Тогда не будет списка максимальных,
-   а будет либо список самых больших из n-го количества строк, либо одна максимальная.
-   Я вывел одну максимальную */
-
 CREATE VIEW view_1 AS
 SELECT *, price - discounter_price AS discount
 FROM orders;
-
-SELECT *
-FROM view_1
-ORDER BY discount DESC
-LIMIT 1;
+SELECT *, MAX(discount) AS max_discount
+FROM view_1;
 
 SELECT *, ROUND(100 - discounter_price / price * 100) AS discount_percent
 FROM orders;
