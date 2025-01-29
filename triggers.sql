@@ -77,4 +77,52 @@ update expenses
 set total = (select sum(salary) from employees)
 where id = 1;
 
+insert into employees
+values (4, 'Alexey', 'Shchukin', 15, NULL);
+
+update employees
+set salary = hourly_pay * 2080
+where employee_id = 6;
+
+CREATE TRIGGER before_insert_mitarbeiter
+BEFORE INSERT ON employees
+FOR EACH ROW
+SET new.salary = new.hourly_pay * 2080;
+
+create trigger after_insert_mitarbeiter
+after insert on employees
+for each row
+update expenses
+set total = total + new.salary
+where `name` = 'salaries';
+
 select * from expenses;
+
+CREATE TABLE changes_salary (
+    id          INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT NOT NULL,
+    old_salary  DECIMAL(10, 2),
+    new_salary DECIMAL(10, 2),
+    change_date DATETIME
+);
+
+DELIMITER //
+
+CREATE TRIGGER logging_changing_salary
+BEFORE UPDATE ON employees
+FOR EACH ROW
+BEGIN
+    INSERT changes_salary (employee_id, old_salary, new_salary, change_date)
+    VALUES (new.employee_id, old.salary, new.salary, NOW());
+END;
+//
+
+DELIMITER ;
+
+SELECT * FROM employees;
+
+UPDATE employees
+SET hourly_pay = 12.5
+WHERE employee_id = 1;
+
+SELECT * FROM changes_salary;
