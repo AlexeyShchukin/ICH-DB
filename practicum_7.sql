@@ -48,12 +48,12 @@ ORDER BY e2.first_name, e2.last_name;
 
 # 1. Выведите 10 городов с наибольшим населением: название города, страна, население.
 
-SELECT city.name AS city,
+SELECT city.name    AS city,
        country.name AS country,
        city.population
 FROM city
-JOIN country
-ON city.CountryCode = country.Code
+         JOIN country
+              ON city.CountryCode = country.Code
 ORDER BY Population DESC
 LIMIT 10;
 
@@ -61,8 +61,8 @@ LIMIT 10;
 
 SELECT country.name, COUNT(city.name) AS city_cnt
 FROM country
-LEFT JOIN city
-ON country.Code = city.CountryCode
+         LEFT JOIN city
+                   ON country.Code = city.CountryCode
 GROUP BY country.name;
 
 # 3. Выведите 10 стран с наиболее высокой продолжительностью жизни
@@ -74,11 +74,10 @@ LIMIT 10;
 
 # 4. Выведите список стран с названиями столиц в каждой
 
-SELECT country.name AS country, city.name AS capital
+SELECT country.name AS country, IF(city.Name IS NULL, '-', city.Name) AS capital
 FROM country
-LEFT JOIN city
-ON country.Code = city.CountryCode
-WHERE city.id = country.Capital;
+         LEFT JOIN city
+                   ON country.Capital = city.id;
 
 # 5. Выведите разбивку населения по провинциям Голландии
 
@@ -93,6 +92,19 @@ SELECT COUNT(*) AS republic_countries
 FROM country
 WHERE GovernmentForm = 'Republic';
 
-# 7. Выведите все формы правление с количеством стран, в которых она присутствует. Какая самая
-# популярная форма правления?
+# 7. Выведите все формы правление с количеством стран, в которых она присутствует.
+# Какая самая популярная форма правления?
+
+SELECT GovernmentForm
+FROM (SELECT GovernmentForm, COUNT(`Name`) c_name
+      FROM country
+      GROUP BY GovernmentForm) c_gf
+WHERE c_gf.c_name = (SELECT MAX(t1.c_name)
+                     FROM (SELECT GovernmentForm, COUNT(`Name`) c_name
+                           FROM country
+                           GROUP BY GovernmentForm) t1);
+
 # 8. Выведите список городов, где население больше (меньше) среднего населения по все городам.
+SELECT c.name
+FROM country c
+WHERE c.Population < (SELECT AVG(Population) FROM country);
