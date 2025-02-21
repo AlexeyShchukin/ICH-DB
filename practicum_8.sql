@@ -77,16 +77,15 @@ ORDER BY cnt_trips DESC;
 
 # 9. Сделать группировку по сервис классу которым пользовались клиенты. В итоге выведите
 # количество клиентов в каждом классе.
-SELECT t.service_class, COUNT(c.id) AS cnt_clients
+SELECT t.service_class, COUNT(t.id) AS cnt_clients
 FROM tickets t
-LEFT JOIN clients c
-ON t.client_id = c.id
 GROUP BY t.service_class;
 
 # 10. Повторить прошлый запрос, но теперь с условием - если клиент пользовался несколькими
 # классами, то его нужно вывести в новую группу “Мульти”.
-SELECT c.id AS client_id, IF(COUNT(t.service_class) > 1, 'Мульти', t.service_class) AS classes
+
+SELECT t1.classes, COUNT(t1.client_id) AS cnt_clients
+FROM (SELECT t.client_id, IF(COUNT(DISTINCT t.service_class) > 1, 'Мульти', t.service_class) AS classes
 FROM tickets t
-RIGHT JOIN clients c
-ON t.client_id = c.id
-GROUP BY c.id;
+GROUP BY t.client_id) t1
+GROUP BY t1.classes;
