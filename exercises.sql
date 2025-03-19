@@ -157,12 +157,12 @@ FROM Courses c
                    ON c.headman_id = s.id;
 
 # Отобразить имена студента и старост, на которых они обучаются
-SELECT s.name
-     , hs.name AS "headManName"
+
+SELECT s.name AS students, h.name AS headmen
 FROM Students s
-         JOIN Students2Courses sc
-              ON s.id = sc.student_id
-         JOIN Courses c
-              ON sc.course_id = c.id
-         JOIN Students hs
-              ON c.headman_id = hs.id
+LEFT JOIN Students2Courses s2c
+ON s.id = s2c.student_id
+LEFT JOIN Courses c
+ON s2c.course_id = c.id
+LEFT JOIN Students h
+ON c.headman_id = h.id;

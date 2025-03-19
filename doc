@@ -1,0 +1,61 @@
+truncate удаляет всю таблицу, оставляя столбцы, не нужен коммит
+
+delete - удаляет значения, нужен коммит
+DELETE FROM table_name WHERE condition;
+
+DROP TABLE IF EXISTS name - полностью удаляет таблицу
+
+ALTER TABLE name MODIFY COLUMN name - меняет тип столбца
+
+ALTER TABLE имя_таблицы CHANGE COLUMN старое_имя_столбца новое_имя_столбца тип_данных
+
+ALTER TABLE имя_таблицы CHANGE DROP column
+
+ALTER TABLE name ADD column TIMESTAMP DEFAULT current_timestamp;
+
+ALTER TABLE name ADD column DATETIME DEFAULT NOW();
+
+ALTER TABLE name ADD column DATE DEFAULT (NOW());
+
+ALTER TABLE name ADD column DATE DEFAULT (CURDATE());
+
+ALTER TABLE name ADD PRIMARY KEY (column_1, column_2)
+
+ALTER TABLE name ADD CONSTRAINT name UNIQUE/PRIMARY KEY/... (first_name, last_name);
+
+ALTER TABLE name DROP CONSTRAINT name;
+
+INSERT INTO table_name (столбец, столбец) VALUES () - добавить строку со значениями
+
+SELECT @@autocommit - проверяет автокоммит у базы
+
+CREATE VIEW имя_представления AS SELECT выражения FROM таблица [WHERE условия];
+
+CREATE DATABASE имя_базы_данных;
+
+SELECT *,
+CASE
+    WHEN price < 20 THEN 'low'
+    WHEN price < 30 THEN 'middle'
+    WHEN price >= 30 THEN 'high'
+    ELSE NULL
+END AS status
+FROM orders;
+
+LOAD DATA LOCAL INFILE '/C:/python_projects/ICH-DB/load.csv'
+INTO TABLE teacher2competencies
+FIELDS TERMINATED BY ' '
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+***FULL JOIN***
+SELECT C.CNAME, O.ORDER_ID
+FROM CUSTOMERS C
+LEFT JOIN ORDERS O
+ON C.CUST_ID = O.CUST_ID
+UNION
+SELECT C.CNAME, O.ORDER_ID
+FROM CUSTOMERS C
+RIGHT JOIN ORDERS O
+ON C.CUST_ID = O.CUST_ID;

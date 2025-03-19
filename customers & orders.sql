@@ -54,6 +54,3 @@ ALTER TABLE orders
 
 UPDATE orders
 SET discounter_price = price * 0.9;
-
-
-

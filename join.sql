@@ -71,3 +71,9 @@ LEFT JOIN employees e
 ON e.department_id = d.department_id
 WHERE e.salary > 15000;
 
+SELECT dep.department_name
+FROM departments dep
+LEFT JOIN employees emp
+ON dep.department_id = emp.department_id
+WHERE emp.department_id IS NULL;
+

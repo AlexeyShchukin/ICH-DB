@@ -71,5 +71,4 @@ WHERE subject_name = 'Литература';
 
 COMMIT;
 
-SELECT @@autocommit;
 

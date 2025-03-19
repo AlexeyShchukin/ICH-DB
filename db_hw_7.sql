@@ -34,7 +34,7 @@ SELECT MAX(country.SurfaceArea) AS max_sur FROM country;
 
 SELECT AVG(country.LifeExpectancy) AS avg_le FROM country;
 
-# Найдите самый населенный город (подсказка: использовать подзапросы)
+# Найдите самый населенный город
 
 SELECT city.Name AS most_pop
 FROM city
