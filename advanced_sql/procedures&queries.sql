@@ -44,7 +44,7 @@ BEGIN
 END $$
 DELIMITER ;
 
-create table queries(
+create table if not exists queries(
 	id int primary key auto_increment,
     `name` varchar(20),
     `query` longtext);
@@ -57,11 +57,7 @@ select * from queries;
 DELIMITER $$
 CREATE PROCEDURE ExecuteScript(IN script_id INT)
 BEGIN
-    DECLARE sql_script TEXT;
-
-    SELECT query INTO sql_script FROM queries WHERE id = script_id;
-
-    SET @sql = sql_script;
+    SELECT query INTO @sql FROM queries WHERE id =script_id;
     PREPARE stmt FROM @sql;
     EXECUTE stmt;
     DEALLOCATE PREPARE stmt;
@@ -69,3 +65,5 @@ END $$
 DELIMITER ;
 
 CALL ExecuteScript(1);
+
+SELECT * FROM employees;
