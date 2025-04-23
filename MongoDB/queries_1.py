@@ -1,5 +1,4 @@
-from MongoDB.my_collections import spotify_youtube, imdb
-from my_collections import customers, trips
+from MongoDB.my_collections import spotify_youtube, imdb, customers, trips
 from query_to_file import write_to_file
 
 
@@ -46,7 +45,7 @@ def find_tomatoes():
                      projection={"_id": 0, "title": 1, "year": 1},
                      sort={"year": 1, "title": -1},
                      limit=10)
-
+find_tomatoes()
 
 @write_to_file
 def count_tomatoes():
@@ -102,3 +101,4 @@ def find_by_years():
                 }
         }
     ])
+
